@@ -1,10 +1,11 @@
 const express=require('express');
 const app=express();
 const bodyParser = require('body-parser');
-const { status } = require('express/lib/response');
 const https = require('https');
 const { url } = require('inspector');
 const path = require('path');
+require('dotenv').config();
+
 
 app.use(bodyParser.urlencoded({extended:true}));
 
@@ -32,10 +33,10 @@ app.post("/",function(req,res){
     };
     const jsonData=JSON.stringify(data);
 
-    const url="https://us22.api.mailchimp.com/3.0/lists/e3def74367";
+    const url=process.env.URL;
     const options={
         method:'POST',
-        auth:'maulik1:321d50f0aa4b89780cb42ef8b81a2ef5-us22'
+        auth:process.env.AUTH
     }
 
     const request=https.request(url,options,function(response){
@@ -57,12 +58,8 @@ app.post("/",function(req,res){
 });
 
 
-app.listen(process.env.PORT || "3000",function(){
+app.listen(process.env.PORT || "3001",function(){
     console.log("server started");
 })
 
 
-//321d50f0aa4b89780cb42ef8b81a2ef5-us22
-
-//Audience ID
-//e3def74367
